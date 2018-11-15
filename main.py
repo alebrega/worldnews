@@ -21,8 +21,10 @@ def get_task():
     content = request.json
     url = content['url']
     languange_to_translate = content['lang']
+    keywords_matching = content['keywords_matching']
+    old_days = content['old_days']
     if valid_url(url):
-        response = save_article(url, languange_to_translate)
+        response = save_article(url, languange_to_translate,keywords_matching,old_days)
         return jsonify({'url': url, 'success': response})
     else:
         abort(404)
