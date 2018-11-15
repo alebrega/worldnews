@@ -60,7 +60,7 @@ def save_article(url, lang, keywords_matching, old_days):
             return False
         try:
             matches = is_similar_context(text)
-            print(matches)
+            #print(matches)
         except Exception as e:
             print('Problems with similar context' + str(e))
 
@@ -99,8 +99,12 @@ def save_article(url, lang, keywords_matching, old_days):
     wp = Wordpress()
     query_for_images=(" ".join(get_keywords_nltk(text, 2)))
     images_src=get_pics(query_for_images,1)
-    print (images_src)
-    if (wp.publish(title, text,images_src[0], unique_keywords)):
+    if images_src is None:
+        image_src=a.top_image
+    else: 
+         image_src=images_src[0]
+    
+    if (wp.publish(title, text,image_src, unique_keywords)):
         print("Publish OK")
         return True
     else:
