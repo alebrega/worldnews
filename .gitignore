@@ -116,5 +116,6 @@ dmypy.json
 
 
 uploads/*
+uploads/*.jpg
 api_translate.json
 api_translate.json

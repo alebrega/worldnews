@@ -1,9 +1,14 @@
 from flask import Flask
 from flask import request, jsonify, abort
 from urllib.request import urlopen, URLError, urlparse
-from get_links import save_article
+from article import save_article
+from models import get_engine, articles
+from sqlalchemy.sql import table, column, select
 
 app = Flask(__name__)
+
+engine = get_engine()
+conn = engine.connect()
 
 
 def valid_url(url):
@@ -23,11 +28,24 @@ def get_task():
     languange_to_translate = content['lang']
     keywords_matching = content['keywords_matching']
     old_days = content['old_days']
+    t = table('articles', column('url'))
+    s = select([t]).where(t.c.url == url)
+    r = conn.execute(s)
+    results = r.fetchall()
+    if (len(results) > 0):
+        return jsonify({'url': url, 'success': False, 'error': 'URL was used before'})
+
     if valid_url(url):
-        response = save_article(url, languange_to_translate,keywords_matching,old_days)
-        return jsonify({'url': url, 'success': response})
+        response = save_article(
+            url, languange_to_translate, keywords_matching, old_days)
+        if response['success']:
+            return jsonify({'url': url, 'success': response['success'], 'message': response['message']})
+        else:
+            return jsonify({'url': url, 'success': response['success'], 'message': response['error']})
     else:
-        abort(404)
+        return jsonify({'url': url, 'success': False, 'error': 'URL is no valid'})
+
+    abort(404)
 
 
 if __name__ == '__main__':

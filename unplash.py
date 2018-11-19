@@ -17,11 +17,11 @@ import uuid
 import requests
 
 
-def get_pics(keywords, num_imgs):
+def get_pics(query, num_imgs):
     urls = []
     try:
         photos = api.search.photos(
-            query=" ".join(keywords), page=1, per_page=num_imgs)
+            query=query, page=0, per_page=num_imgs)
         for photo in photos['results']:
             photo_get = api.photo.get(photo.id)
             urls.append(photo_get.urls.raw)
