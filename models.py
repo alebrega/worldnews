@@ -7,9 +7,18 @@ metadata = MetaData()
 
 def get_engine():
     engine = create_engine(
-        "mysql+pymysql://homestead:secret@localhost:33060/worldnews", encoding="utf8")
+        "mysql+pymysql://homestead:secret@localhost:33060/contento", encoding="utf8")
     return engine
 
+
+users = Table('users', metadata,
+              Column('id', Integer(), primary_key=True, autoincrement=True),
+              Column('email', String(2083), nullable=False),
+              Column('password', String(2083), nullable=False),
+              Column('created_on', DateTime(), default=datetime.now),
+              Column('updated_on', DateTime(),
+                     default=datetime.now, onupdate=datetime.now)
+              )
 
 sources = Table('sources', metadata,
                 Column('id', Integer(), primary_key=True),
