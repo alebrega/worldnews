@@ -1,0 +1,11 @@
+{
+  "folders": [
+    {
+      "path": "app"
+    }
+  ],
+  "settings": {
+    "python.pythonPath": "venv/bin/python",
+	"python.terminal.activateEnvironment": true
+  }
+}
