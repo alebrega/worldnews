@@ -79,5 +79,4 @@ if __name__ == '__main__':
     contento.config.from_mapping(
         SECRET_KEY=os.environ['SECRET']
     )
-
-    contento.run(debug=os.environ['DEBUG'])
+    contento.run(host='127.0.0.1', port=8080,debug=os.environ['DEBUG'])
