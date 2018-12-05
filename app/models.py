@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, MetaData, Text, Table, Integer, String, Column, DateTime, ForeignKey, Numeric, CheckConstraint
+from sqlalchemy import create_engine, VARCHAR, MetaData, Text, Table, Integer, String, Column, DateTime, ForeignKey, Numeric, CheckConstraint
 import os
 from datetime import datetime
 
@@ -23,7 +23,7 @@ users = Table('users', metadata,
 sources = Table('sources', metadata,
                 Column('id', Integer(), primary_key=True),
                 Column('name', String(100), nullable=False),
-                Column('url', String(2083),  unique=True, nullable=False),
+                Column('url', VARCHAR(900),  unique=True, nullable=False),
                 Column('created_on', DateTime(), default=datetime.now),
                 Column('updated_on', DateTime(),
                        default=datetime.now, onupdate=datetime.now)
@@ -35,7 +35,7 @@ articles = Table('articles', metadata,
                  Column('author', Text(), nullable=True),
                  Column('title', Text(), nullable=True),
                  Column('original_title', String(200), nullable=True),
-                 Column('url', String(2083),  unique=True, nullable=False),
+                 Column('url', VARCHAR(900),  unique=True, nullable=False),
                  Column('top_image', String(2083),  nullable=True),
                  Column('keywords', Text(), nullable=True),
                  Column('original_text', Text(), nullable=True),
